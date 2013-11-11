@@ -1,0 +1,22 @@
+#use the following command to install R Curl, which will allow you to use "https" formats to read csv's.
+install.packages("RCurl", repos = "http://cran.ma.imperial.ac.uk")
+
+library(RCurl)
+x = getURL("https://raw.github.com/tristantao/data-curators/master/250.csv")
+y = read.csv(text = x)
+z = data.frame(y)
+
+#Magnitude versus Year:
+# Magnitude is column 8
+# Year is column 12
+
+#turn the relevant columns into vectors:
+mag = z[[8]]
+year_raw = as.vector(z[[12]])
+d <- as.Date(year_raw, format="%Y/%m/%d") 
+year = as.numeric(format(d, format = "%Y"))
+month = as.numeric(format(d, format = "%m")) 
+
+#make scatterplot:
+
+plot(d,mag, xlab = "Month in 1999", ylab = "Magnitude", main = "Earthquake Magnitude versus Time", cex=0.7)
